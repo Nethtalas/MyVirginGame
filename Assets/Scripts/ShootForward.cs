@@ -20,8 +20,8 @@ public class ShootForward : MonoBehaviour
         var currentSpeed = rb.velocity.magnitude;
         if (currentSpeed < Speed)
         {
-            rb.AddForce(rb.transform.up * Speed);
-           
+            
+            rb.velocity += rb.transform.up * Speed;
         }
 
         Destroy(gameObject, lifespan);
