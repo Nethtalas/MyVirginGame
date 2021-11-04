@@ -21,6 +21,7 @@ public class CharacterMovement : MonoBehaviour
     public GameObject Projectile;
     public Rigidbody rb;
     public LayerMask IgnoreLayer = 1<<6;
+    public Animator anim;
 
     private Vector3 playerVelocity = Vector3.zero;
     private bool groundedPlayer;
@@ -40,11 +41,15 @@ public class CharacterMovement : MonoBehaviour
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * Speed);
 
+        // Sets the float to start and stop the animations.
+        anim.SetFloat("Speed", controller.velocity.magnitude);
+
+        FireWeapon();
+
         if (move != Vector3.zero)
         {
             gameObject.transform.forward = move;
         }
-
         playerVelocity.y += GravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
 
@@ -55,12 +60,9 @@ public class CharacterMovement : MonoBehaviour
             StartCoroutine(Dash());
         }
 
-        FireWeapon();
-    }
-    private void FixedUpdate()
-    {
         
     }
+  
 
     private void FireWeapon()
     {
