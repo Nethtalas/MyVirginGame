@@ -222,3 +222,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 15
   lifespan: 5
+  BulletExplotion: {fileID: 8737820584522808020, guid: 73025419a1a89bd458819751cf4b2835, type: 3}
