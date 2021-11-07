@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BallOuterLayer
-  m_Shader: {fileID: -6465566751694194690, guid: 4b125abd95f8d3249bd90d84ee83d9fa, type: 3}
+  m_Name: Shaded_Layer
+  m_Shader: {fileID: -6465566751694194690, guid: 5422c0bd66579b14796a37d3f22ef5a7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0

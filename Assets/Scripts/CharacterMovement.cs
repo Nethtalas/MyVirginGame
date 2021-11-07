@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovement : MonoBehaviour
 {
     private CharacterController controller;
 
-    public float Jumpspeed = 8.0f;
+    
     public float Speed = 10.0f;
     public float GravityValue = -9.81f;
     public Camera Camera;
@@ -17,21 +18,27 @@ public class CharacterMovement : MonoBehaviour
     public float Dashspeed = 5f;
     public float FireRate = 0.5f;
     public float nextFire = 0.5f;
-    public float ProjectileSpeed = 25f;
     public GameObject Projectile;
     public Rigidbody rb;
     public LayerMask IgnoreLayer = 1<<6;
-    public Animator anim;
+    private float dashCooldownTimer;
+    public float DashCooldown = 2;
+    public Slider DashSlider;
+
+    
+  
 
     private Vector3 playerVelocity = Vector3.zero;
     private bool groundedPlayer;
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        DashSlider.value = CalculateTime();
     }
 
     private void Update()
     {
+        
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -40,9 +47,6 @@ public class CharacterMovement : MonoBehaviour
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * Speed);
-
-        // Sets the float to start and stop the animations.
-        anim.SetFloat("Speed", controller.velocity.magnitude);
 
         FireWeapon();
 
@@ -55,14 +59,28 @@ public class CharacterMovement : MonoBehaviour
 
         HeadRotateTowardsMouse(move);
 
+        DashToTarget();
+
+        DashSlider.value = CalculateTime();
+    }
+
+    float CalculateTime()
+    {
+        return DashCooldown / dashCooldownTimer;
+    }
+
+    private void DashToTarget()
+    {
+        dashCooldownTimer -= Time.deltaTime;
         if (Input.GetButtonDown("Jump"))
         {
+           
+            if (dashCooldownTimer > 0) return;
+            dashCooldownTimer = DashCooldown;
             StartCoroutine(Dash());
+            
         }
-
-        
     }
-  
 
     private void FireWeapon()
     {
