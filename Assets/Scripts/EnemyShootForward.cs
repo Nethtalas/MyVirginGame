@@ -41,9 +41,9 @@ public class EnemyShootForward : MonoBehaviour
         {
             Vector3 position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
             position.y -= 0.5f;
-            var explotion = Instantiate(EnemyBulletExplotion, position, Quaternion.identity);
+            var explosion = Instantiate(EnemyBulletExplotion, position, Quaternion.identity);
             Destroy(gameObject);
-            Destroy(explotion, 0.5f);
+            Destroy(explosion, 0.5f);
         }
     }
 }
